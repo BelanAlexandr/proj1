@@ -5,12 +5,14 @@ import (
 	"os"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/joho/godotenv"
 )
 
 var jwtKey = os.Getenv("JWT_KEY")
 
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
-
+	godotenv.Load()
+	var jwtKey = []byte(os.Getenv("JWT_KEY"))
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		cookie, err := r.Cookie("token")

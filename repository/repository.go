@@ -11,12 +11,19 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtKey = os.Getenv("JWT_KEY")
+func Load() {
+	godotenv.Load()
+	connStr = os.Getenv("DB_CONN_STR")
+	jwtKey = []byte(os.Getenv("JWT_KEY"))
+}
 
-var connStr = os.Getenv("ConnStr")
+var jwtKey = []byte(os.Getenv("JWT_KEY"))
+var connStr = os.Getenv("DB_CONN_STR")
 
 func ShowAll(w http.ResponseWriter) {
 
@@ -110,7 +117,6 @@ func Reg(log, pass string, w http.ResponseWriter, r *http.Request) {
 	})
 }
 func Auth(name, pass string, w http.ResponseWriter, r *http.Request) {
-
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)
