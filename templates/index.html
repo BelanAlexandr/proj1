@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список пользователей</title>
+
+    
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 40px auto;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    .top-panel {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .add-btn,
+    .back-btn,
+    .logout-btn {
+        display: inline-block;
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .add-btn {
+        background-color: #4CAF50;
+    }
+
+    .back-btn {
+        background-color: #2196F3;
+    }
+
+    .logout-btn {
+        background-color: #f44336;
+    }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .top-panel {
+            margin-bottom: 20px;
+        }
+
+        .add-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Список пользователей</h1>
+
+ <div class="top-panel">
+
+    <a class="add-btn" href="/add">
+        Добавить пользователя
+    </a>
+
+
+    <a class="logout-btn" href="/logout">
+        Выйти
+    </a>
+
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Возраст</th>
+                <th>Пол</th>
+            </tr>
+        </thead>
+
+        <tbody id="usersTable">
+        </tbody>
+    </table>
+
+    <script>
+        async function loadUsers() {
+            try {
+                const response = await fetch("/users");
+
+                const users = await response.json();
+
+                const table = document.getElementById("usersTable");
+
+                table.innerHTML = "";
+
+                users.forEach(user => {
+                    table.innerHTML += `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.age}</td>
+                            <td>${user.sex}</td>
+                        </tr>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Ошибка загрузки пользователей:", error);
+            }
+        }
+
+        loadUsers();
+    </script>
+
+</body>
+{{if .Error}}
+    <div style="color:red;">
+        {{.Error}}
+    </div>
+{{end}}
+</html>
