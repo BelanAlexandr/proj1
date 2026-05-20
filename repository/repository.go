@@ -16,7 +16,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func Load() {
+func Loading() {
 	godotenv.Load()
 	connStr = os.Getenv("DB_CONN_STR")
 	jwtKey = []byte(os.Getenv("JWT_KEY"))

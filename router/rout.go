@@ -3,7 +3,7 @@ package rout
 import (
 	"fmt"
 	"net/http"
-	sozd "proj1/func"
+	sozd "proj1/Authmid"
 	handler "proj1/handler"
 )
 

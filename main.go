@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	repository.Load()
+	repository.Loading()
 	rout.Rout()
 }
